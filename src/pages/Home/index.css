@@ -1,0 +1,109 @@
+/* Estilo geral do container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #000; /* Fundo preto */
+    color: #fff; /* Texto branco */
+    border-radius: 10px;
+}
+
+/* Estilo do formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #1a1a1a; /* Fundo cinza escuro */
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+form h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+form input {
+    border: 1px solid #555;
+    border-radius: 5px;
+    height: 40px;
+    background-color: #333; /* Fundo cinza escuro */
+    color: #fff; /* Texto branco */
+    font-size: 16px;
+    padding-left: 10px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+form input::placeholder {
+    color: #aaa; /* Placeholder em cinza claro */
+}
+
+form input:focus {
+    border-color: #007BFF; /* Borda azul no foco */
+}
+
+form button {
+    border-radius: 5px;
+    background-color: #007BFF; /* Azul */
+    height: 40px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff; /* Texto branco */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
+    opacity: 0.9;
+}
+
+/* Estilo dos cards de usuários */
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a; /* Fundo cinza escuro */
+    margin: 10px 0;
+    padding: 15px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card p {
+    color: #fff; /* Texto branco */
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.card span {
+    color: #ccc; /* Texto secundário em cinza claro */
+}
+
+.card button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.card button:hover {
+    transform: scale(1.1); /* Aumenta o botão no hover */
+}
+
+.card img {
+    width: 20px;
+    height: 20px;
+}
