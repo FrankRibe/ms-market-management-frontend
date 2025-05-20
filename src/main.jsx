@@ -7,6 +7,6 @@ import MyGlobalStyles from './pages/styles/globalStyles';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MyGlobalStyles />
-    <App /> {/* Apenas o App deve ser renderizado aqui */}
+    <App /> 
   </React.StrictMode>,
 );

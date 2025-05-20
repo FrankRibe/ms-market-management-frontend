@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import './index.css';
+import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import './cadastro.css';
 import { useRef, useState } from 'react';
 import api from '../../services/api';
 
@@ -10,6 +10,7 @@ function Cadastro() {
     const phoneRef = useRef();
     const passwordRef = useRef();
     const [errorMessage, setErrorMessage] = useState(''); // Estado para armazenar mensagens de erro
+    const navigate = useNavigate(); // Inicializa o hook useNavigate
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -23,7 +24,10 @@ function Cadastro() {
                 password: passwordRef.current.value,
             });
             alert('Cadastro realizado com sucesso!');
-            setErrorMessage(''); // Limpa mensagens de erro após sucesso
+            setErrorMessage('');
+
+            // Redireciona para a página de ativação
+            navigate('/ativacao');
 
             // Limpa os campos do formulário
             nameRef.current.value = '';
@@ -43,7 +47,7 @@ function Cadastro() {
 
     return (
         <div className="container">
-            <h1 className="container">Cadastro de Vendedores</h1>
+            <h1>Cadastro de Vendedores</h1>
             {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Exibe a mensagem de erro */}
             <form onSubmit={handleSubmit}>
                 <input ref={nameRef} type="text" placeholder="Nome" />
