@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import './index.css';
-import { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import './cadastro.css';
+import { useRef, useState } from 'react';
 import api from '../../services/api';
 
 function Cadastro() {
@@ -9,6 +9,8 @@ function Cadastro() {
     const emailRef = useRef();
     const phoneRef = useRef();
     const passwordRef = useRef();
+    const [errorMessage, setErrorMessage] = useState(''); // Estado para armazenar mensagens de erro
+    const navigate = useNavigate(); // Inicializa o hook useNavigate
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -22,14 +24,31 @@ function Cadastro() {
                 password: passwordRef.current.value,
             });
             alert('Cadastro realizado com sucesso!');
+            setErrorMessage('');
+
+            // Redireciona para a página de ativação
+            navigate('/ativacao');
+
+            // Limpa os campos do formulário
+            nameRef.current.value = '';
+            cnpjRef.current.value = '';
+            emailRef.current.value = '';
+            phoneRef.current.value = '';
+            passwordRef.current.value = '';
         } catch (error) {
-            alert('Erro ao cadastrar, tente novamente!');
+            // Verifica se há uma resposta do backend
+            if (error.response && error.response.data && error.response.data.erro) {
+                setErrorMessage(error.response.data.erro); // Define a mensagem de erro do backend
+            } else {
+                setErrorMessage('Erro ao cadastrar, tente novamente!'); // Mensagem genérica
+            }
         }
     }
 
     return (
         <div className="container">
-            <h1 className="container">Cadastro de Vendedores</h1>
+            <h1>Cadastro de Vendedores</h1>
+            {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Exibe a mensagem de erro */}
             <form onSubmit={handleSubmit}>
                 <input ref={nameRef} type="text" placeholder="Nome" />
                 <input ref={cnpjRef} type="text" placeholder="CNPJ" />
