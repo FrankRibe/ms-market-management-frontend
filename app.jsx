@@ -1,23 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./src/pages/Home";
-import Cadastro from "./src/pages/Cadastro";
-import Login from "./src/pages/Login";
-import Products from "./src/pages/Products";
-import List_Products from "./src/pages/List_Products";
-import Update_Products from "./src/pages/Update_Products";
-import Delete_Products from "./src/pages/Delete_Products";
+import Home from "./src/pages/Home/home";
+import Cadastro from "./src/pages/Cadastro/cadastro";
+import Login from "./src/pages/Login/login";
+import Ativacao from "./src/pages/Ativacao/ativacao";
+import Painel from "./src/pages/Painel/painel";  // importa a página Painel
+import CriarProduto from "./src/pages/Cadastroproduto/cadastroproduto";
+
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/sellers" element={<Cadastro />} />
+                <Route path="/cadastro-seller" element={<Cadastro />} />
+                <Route path="/ativacao" element={<Ativacao />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/list" element={<List_Products />} />
-                <Route path="/delete" element={<Delete_Products />} />
-                <Route path="/update" element={<Update_Products />} />
+                <Route path="/painel" element={<Painel />} /> 
+                <Route path="/produtos/criar" element={<CriarProduto />} />
             </Routes>
         </BrowserRouter>
     );
