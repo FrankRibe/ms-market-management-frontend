@@ -15,24 +15,19 @@ function CadastroProduto() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            alert("Você precisa estar logado para cadastrar um produto.");
-            navigate("/login");
-            return;
-        }
-
         try {
-            await api.post(
+            const token = localStorage.getItem("token");
+            const seller_id = 1;
+
+            const response = await api.post(
                 "/api/products/criar",
                 {
                     name: nameRef.current.value,
-                    preco: parseFloat(precoRef.current.value),
+                    preco: parseFloat(precoRef.current.value.replace(",", ".")),
                     quantidade: parseInt(quantidadeRef.current.value),
-                    status: statusRef.current.value,
-                    imagem: imagemRef.current.value,
-                    observacoes: observacoesRef.current.value,
+                    status: statusRef.current.value.toLowerCase() === "ativo",
+                    imagem_url: imagemRef.current.value,
+                    seller_id: seller_id,
                 },
                 {
                     headers: {
@@ -40,17 +35,25 @@ function CadastroProduto() {
                     },
                 }
             );
-            alert("Produto cadastrado com sucesso!");
-            
-            nameRef.current.value = "";
-            precoRef.current.value = "";
-            quantidadeRef.current.value = "";
-            statusRef.current.value = "";
-            imagemRef.current.value = "";
-            observacoesRef.current.value = "";
+
+            const desejaAdicionarMais = window.confirm(
+                "Produto cadastrado com sucesso!\n\nDeseja adicionar mais um produto? Clique em OK para continuar ou Cancelar para voltar ao painel."
+            );
+
+            if (desejaAdicionarMais) {
+                nameRef.current.value = "";
+                precoRef.current.value = "";
+                quantidadeRef.current.value = "";
+                statusRef.current.value = "";
+                imagemRef.current.value = "";
+                observacoesRef.current.value = "";
+            } else {
+                navigate("/painel");
+            }
+
         } catch (err) {
             console.error("Erro ao cadastrar produto:", err.response?.data || err.message);
-            alert("Erro ao tentar cadastrar novo produto.");
+            alert("Erro ao tentar cadastrar novo produto. Verifique os dados e tente novamente.");
         }
     }
 
@@ -59,9 +62,9 @@ function CadastroProduto() {
             <h2>Cadastro de Produto</h2>
             <form onSubmit={handleSubmit}>
                 <input ref={nameRef} placeholder="Nome do produto" type="text" required />
-                <input ref={precoRef} placeholder="Preço" type="number" step="0.01" required />
+                <input ref={precoRef} placeholder="Preço" type="text" required />
                 <input ref={quantidadeRef} placeholder="Quantidade" type="number" required />
-                <input ref={statusRef} placeholder="Status (ativo/inativo)" type="text" required />
+                <input ref={statusRef} placeholder="Status (Ativo/Inativo)" type="text" required />
                 <input ref={imagemRef} placeholder="URL da imagem" type="url" />
                 <textarea ref={observacoesRef} placeholder="Observações" />
                 <button type="submit">Cadastrar</button>

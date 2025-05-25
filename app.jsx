@@ -3,8 +3,8 @@ import Home from "./src/pages/Home/home";
 import Cadastro from "./src/pages/Cadastro/cadastro";
 import Login from "./src/pages/Login/login";
 import Ativacao from "./src/pages/Ativacao/ativacao";
-import Painel from "./src/pages/Painel/painel";  // importa a página Painel
-import CriarProduto from "./src/pages/Cadastroproduto/cadastroproduto";
+import Painel from "./src/pages/Painel/painel"; 
+import CadastroProduto from './src/pages/CadastroProduto/cadastroproduto';
 
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
                 <Route path="/ativacao" element={<Ativacao />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/painel" element={<Painel />} /> 
-                <Route path="/produtos/criar" element={<CriarProduto />} />
+                <Route path="/produtos/criar" element={<CadastroProduto />} />
+
             </Routes>
         </BrowserRouter>
     );

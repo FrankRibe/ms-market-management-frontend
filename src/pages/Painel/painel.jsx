@@ -7,7 +7,7 @@ function Painel() {
   return (
     <div className="painel-container">
       <h1>Painel de Controle</h1>
-      <p>Escolha uma ação:</p>
+      <p></p>
       <div className="button-group">
         <button className="button" onClick={() => navigate('/produtos/criar')}>
           Criar Produto
@@ -22,6 +22,14 @@ function Painel() {
           Inativar Produto
         </button>
       </div>
+
+      <button
+        className="link-button"
+        onClick={() => navigate('/')}
+        type="button"
+      >
+        Voltar para a Home
+      </button>
     </div>
   );
 }
