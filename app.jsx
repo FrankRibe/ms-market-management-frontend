@@ -5,6 +5,8 @@ import Login from "./src/pages/Login/login";
 import Ativacao from "./src/pages/Ativacao/ativacao";
 import Painel from "./src/pages/Painel/painel"; 
 import CadastroProduto from './src/pages/CadastroProduto/cadastroproduto';
+import ListarProdutos from "./src/pages/Listarproduto/listarproduto";
+import EditarProduto from "./src/pages/EditarProduto/editarproduto";
 
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/painel" element={<Painel />} /> 
                 <Route path="/produtos/criar" element={<CadastroProduto />} />
+                <Route path="/produtos/listar" element={<ListarProdutos />} />
+                <Route path="/produtos/editar" element={<EditarProduto />} />
 
             </Routes>
         </BrowserRouter>

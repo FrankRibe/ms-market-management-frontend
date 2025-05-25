@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../../services/api";
+import "./listarproduto.css"; 
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
@@ -9,8 +10,13 @@ function ListarProdutos() {
   useEffect(() => {
     async function fetchProdutos() {
       try {
-        const response = await api.get("/api/products");
-        setProdutos(response.data.products || []);
+        const token = localStorage.getItem("token");
+        const response = await api.get("/api/products/listar", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProdutos(response.data || []);
       } catch (error) {
         console.error("Erro ao carregar produtos:", error.response?.data || error.message);
         alert("Erro ao carregar produtos.");
@@ -22,29 +28,25 @@ function ListarProdutos() {
     fetchProdutos();
   }, []);
 
-  if (loading) {
-    return <p>Carregando produtos...</p>;
-  }
-
-  if (produtos.length === 0) {
-    return <p>Nenhum produto cadastrado.</p>;
-  }
+  if (loading) return <p>Carregando produtos...</p>;
+  if (produtos.length === 0) return <p>Nenhum produto cadastrado.</p>;
 
   return (
-    <div>
-      <h2>Meus Produtos</h2>
-      <ul>
-        {produtos.map((produto) => (
-          <li key={produto.id}>
-            <strong>{produto.name}</strong> - R$ {produto.preco.toFixed(2)} - Quantidade: {produto.quantidade}
-            <br />
-            Status: {produto.status}
-            <br />
-            {produto.imagem && <img src={produto.imagem} alt={produto.name} width="100" />}
-            <p>{produto.observacoes}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="container">
+      <h2>Produtos Cadastrados</h2>
+
+      {produtos.map((produto) => (
+        <div key={produto.id} className="produto-card">
+          <h3>{produto.name}</h3>
+          <p><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</p>
+          <p><strong>Quantidade:</strong> {produto.quantidade}</p>
+          <p><strong>Status:</strong> {produto.status ? "Ativo" : "Inativo"}</p>
+          {produto.imagem && <img src={produto.imagem} alt={produto.name} className="produto-imagem" />}
+          <p>{produto.observacoes}</p>
+        </div>
+      ))}
+
+      <Link to="/painel" className="botao-voltar">Voltar para o Painel</Link>
     </div>
   );
 }
