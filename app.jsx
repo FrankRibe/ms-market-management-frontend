@@ -5,6 +5,7 @@ import Login from "./src/pages/Login/login";
 import Ativacao from "./src/pages/Ativacao/ativacao";
 import Painel from "./src/pages/Painel/painel"; 
 import CadastroProduto from './src/pages/CadastroProduto/cadastroproduto';
+import Vendas from "./src/pages/Vendas/vendas";
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/painel" element={<Painel />} /> 
                 <Route path="/produtos/criar" element={<CadastroProduto />} />
+                <Route path="/vendas" element={<Vendas />} />
+
 
             </Routes>
         </BrowserRouter>

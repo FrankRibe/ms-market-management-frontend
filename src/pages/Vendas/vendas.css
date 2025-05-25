@@ -1,0 +1,32 @@
+#cadastro-venda-container select {
+  padding: 12px 40px 12px 12px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg width='18' height='18' fill='gray' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l4 4 4-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px 18px;
+  cursor: pointer;
+}
+
+#cadastro-venda-container select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.12);
+  outline: none;
+}
+
+#cadastro-venda-container select:disabled {
+  background: #e9ecef;
+  color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
