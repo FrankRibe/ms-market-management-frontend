@@ -1,0 +1,129 @@
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+        min-width: auto;
+    }
+}
+
+/* Estilo geral do container principal */
+.container {
+    width: auto;
+    max-width: 1500px;
+    min-width: 600px;
+    margin: 2.5rem auto;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #f5f5f5;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título */
+.container h1, .container h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.7rem;
+    text-align: center;
+    color: #e5e5e5;
+}
+
+/* Inputs e busca */
+.input-busca, input[type="text"], input[type="number"] {
+    padding: 0.5rem;
+    border: 1px solid #444;
+    border-radius: 0.375rem;
+    background-color: #2a2a2a;
+    color: #f5f5f5;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+    margin-bottom: 1.5rem;
+}
+
+input::placeholder {
+    color: #888;
+}
+
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Botões padrão */
+button, .btn-salvar {
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 0.2rem;
+}
+
+button:hover, .btn-salvar:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
+/* Botões de ativar/inativar */
+.botao-verde {
+    background-color: #28a745;
+}
+
+.botao-verde:hover {
+    background-color: #218838;
+}
+
+.botao-vermelho {
+    background-color: #dc3545;
+}
+
+.botao-vermelho:hover {
+    background-color: #c82333;
+}
+
+/* Link voltar */
+.botao-voltar {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #999;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.botao-voltar:hover {
+    background-color: #777;
+}
+
+/* Layout da lista de produtos (inativar) */
+.produto {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Mensagem de erro */
+.error-message {
+    color: #ff4d4f;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border: 1px solid #ff4d4f;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    text-align: center;
+}

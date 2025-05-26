@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../services/api";
-import './editarproduto.css';
+import "./editarproduto.css";
+import { Link } from "react-router-dom";
 
 function EditarProduto() {
   const [produtos, setProdutos] = useState([]);
-  const [editandoId, setEditandoId] = useState(null);
-  const [form, setForm] = useState({
-    name: "",
-    preco: "",
-    quantidade: "",
-    status: "",
-    imagem: ""
-  });
+  const [buscaId, setBuscaId] = useState("");
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
   useEffect(() => {
     buscarProdutos();
@@ -19,89 +14,113 @@ function EditarProduto() {
 
   async function buscarProdutos() {
     try {
-      const token = localStorage.getItem('token');
-      const response = await api.get('/listar-Products', {
-        headers: { Authorization: `Bearer ${token}` }
+      const token = localStorage.getItem("token");
+      const response = await api.get("/api/products/listar", {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setProdutos(response.data.products);
+      setProdutos(response.data || []);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
+      alert("Erro ao buscar produtos.");
     }
   }
 
-  function iniciarEdicao(produto) {
-    setEditandoId(produto.id);
-    setForm({
-      name: produto.name,
-      preco: produto.preco,
-      quantidade: produto.quantidade,
-      status: produto.status,
-      imagem: produto.imagem
-    });
+  function buscarProdutoPorId() {
+    const produto = produtos.find(
+      (item) => item.id.toString() === buscaId.trim()
+    );
+    if (!produto) {
+      alert("Produto não encontrado!");
+      return;
+    }
+    setProdutoSelecionado({ ...produto });
   }
 
-  async function atualizarProduto(e) {
-    e.preventDefault();
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setProdutoSelecionado((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  async function salvarEdicao() {
     try {
-      const token = localStorage.getItem('token');
-      await api.put(`/api/products/${editandoId}`, form, {
-        headers: { Authorization: `Bearer ${token}` }
+      const token = localStorage.getItem("token");
+      const { id, name, image, preco, quantidade } = produtoSelecionado;
+      await api.put(`/api/products/atualizar/${id}`, {
+        name,
+        image,
+        preco,
+        quantidade,
+      }, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setEditandoId(null);
+      alert("Produto atualizado com sucesso!");
       buscarProdutos();
     } catch (error) {
-      console.error("Erro ao atualizar produto:", error);
+      console.error("Erro ao salvar alterações:", error);
+      alert("Erro ao salvar alterações.");
     }
   }
 
   return (
     <div className="container">
-      <h2>Atualizar Produto</h2>
-      <ul className="product-list">
-        {produtos.map((produto) => (
-          <li key={produto.id} className="product-item">
-            <p>{produto.name} - R$ {produto.preco}</p>
-            <button onClick={() => iniciarEdicao(produto)} className="button">Editar</button>
-          </li>
-        ))}
-      </ul>
+      <h2>Editar Produto</h2>
 
-      {editandoId && (
-        <form onSubmit={atualizarProduto} className="edit-form">
+      <input
+        type="text"
+        placeholder="Digite o ID do produto"
+        value={buscaId}
+        onChange={(e) => setBuscaId(e.target.value)}
+        className="input-busca"
+      />
+      <button onClick={buscarProdutoPorId} className="btn-buscar">
+        Buscar
+      </button>
+
+      {produtoSelecionado && (
+        <div className="form-edicao">
+          <p><strong>ID:</strong> {produtoSelecionado.id}</p>
+          <p><strong>Status:</strong> {produtoSelecionado.status ? "Ativo" : "Inativo"}</p>
+
+          <label>Nome:</label>
           <input
-            value={form.name}
-            onChange={e => setForm({ ...form, name: e.target.value })}
-            placeholder="Nome"
-          />
-          <input
-            value={form.preco}
-            onChange={e => setForm({ ...form, preco: e.target.value })}
-            placeholder="Preço"
-          />
-          <input
-            value={form.quantidade}
-            onChange={e => setForm({ ...form, quantidade: e.target.value })}
-            placeholder="Quantidade"
-          />
-          <input
-            value={form.status}
-            onChange={e => setForm({ ...form, status: e.target.value })}
-            placeholder="Status"
-          />
-          <input
-            value={form.imagem}
-            onChange={e => setForm({ ...form, imagem: e.target.value })}
-            placeholder="URL da Imagem"
+            type="text"
+            name="name"
+            value={produtoSelecionado.name}
+            onChange={handleChange}
           />
 
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginTop: "10px" }}>
-            <button type="submit" className="button">Atualizar Produto</button>
-            <button type="button" className="button button-danger" onClick={() => setEditandoId(null)}>
-              Cancelar
-            </button>
-          </div>
-        </form>
+          <label>Imagem (URL):</label>
+          <input
+            type="text"
+            name="image"
+            value={produtoSelecionado.image}
+            onChange={handleChange}
+          />
+
+          <label>Preço:</label>
+          <input
+            type="number"
+            name="preco"
+            value={produtoSelecionado.preco}
+            onChange={handleChange}
+          />
+
+          <label>Quantidade:</label>
+          <input
+            type="number"
+            name="quantidade"
+            value={produtoSelecionado.quantidade}
+            onChange={handleChange}
+          />
+
+          <button onClick={salvarEdicao} className="btn-salvar">Salvar Alterações</button>
+        </div>
       )}
+
+      <Link to="/painel">Voltar ao painel</Link>
     </div>
   );
 }

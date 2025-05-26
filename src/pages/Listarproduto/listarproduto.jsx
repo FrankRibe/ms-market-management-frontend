@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
-import "./listarproduto.css"; 
+import "./listarproduto.css";
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
@@ -40,13 +40,18 @@ function ListarProdutos() {
           <h3>{produto.name}</h3>
           <p><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</p>
           <p><strong>Quantidade:</strong> {produto.quantidade}</p>
-          <p><strong>Status:</strong> {produto.status ? "Ativo" : "Inativo"}</p>
+          <p>
+            <strong>Status:</strong>{" "}
+            <span className={produto.status ? "status-ativo" : "status-inativo"}>
+              {produto.status ? "Ativo" : "Inativo"}
+            </span>
+          </p>
           {produto.imagem && <img src={produto.imagem} alt={produto.name} className="produto-imagem" />}
           <p>{produto.observacoes}</p>
         </div>
       ))}
 
-      <Link to="/painel" className="botao-voltar">Voltar para o Painel</Link>
+      <Link to="/painel">Voltar ao painel</Link>
     </div>
   );
 }
