@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from '../../services/api';
 import './login.css';
+import Painel from "../Painel/painel";
 
 function Login() {
     const emailRef = useRef();
@@ -13,16 +14,21 @@ function Login() {
         event.preventDefault();
 
         try {
-            const { data: token } = await api.post('/api/auth/login', {
+            const response = await api.post('/api/auth/login', {
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
             });
+                                            
+            console.log("Resposta do login:", response.data);
 
+            const token = response.data.access_token;
             localStorage.setItem('token', token);
 
-            // Define a mensagem de sucesso
-            setSuccessMessage("Login efetuado com sucesso!");
             
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+
+            setSuccessMessage("Login efetuado com sucesso!");
+            navigate('/painel');
         } catch (err) {
             alert("Informação incorreta.");
         }
@@ -31,7 +37,7 @@ function Login() {
     return (
         <div className="container">
             <h2>Login</h2>
-            {/* Exibe a mensagem de sucesso, se existir */}
+            { }
             {successMessage && <p className="success-message">{successMessage}</p>}
             <form onSubmit={handleSubmit}>
                 <input ref={emailRef} placeholder="Email" type="email" />
@@ -44,3 +50,4 @@ function Login() {
 }
 
 export default Login;
+
