@@ -5,7 +5,11 @@ import Login from "./src/pages/Login/login";
 import Ativacao from "./src/pages/Ativacao/ativacao";
 import Painel from "./src/pages/Painel/painel"; 
 import CadastroProduto from './src/pages/CadastroProduto/cadastroproduto';
+import ListarProdutos from "./src/pages/Listarproduto/listarproduto";
+import EditarProduto from "./src/pages/EditarProduto/editarproduto";
+import InativarProduto from "./src/pages/InativarProduto/inativarproduto";
 import Vendas from "./src/pages/Vendas/vendas";
+
 
 function App() {
     return (
@@ -17,6 +21,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/painel" element={<Painel />} /> 
                 <Route path="/produtos/criar" element={<CadastroProduto />} />
+                <Route path="/produtos/listar" element={<ListarProdutos />} />
+                <Route path="/produtos/editar" element={<EditarProduto />} />
+                <Route path="/produtos/inativar" element={<InativarProduto />} />
                 <Route path="/vendas" element={<Vendas />} />
             </Routes>
         </BrowserRouter>
