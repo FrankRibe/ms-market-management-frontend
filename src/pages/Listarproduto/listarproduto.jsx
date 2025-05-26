@@ -46,7 +46,11 @@ function ListarProdutos() {
               {produto.status ? "Ativo" : "Inativo"}
             </span>
           </p>
-          {produto.imagem && <img src={produto.imagem} alt={produto.name} className="produto-imagem" />}
+          {produto.imagem_url && 
+          <img
+           src={produto.imagem_url}
+           alt={produto.name}
+           className="produto-imagem" />}
           <p>{produto.observacoes}</p>
         </div>
       ))}

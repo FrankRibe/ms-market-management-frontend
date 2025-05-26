@@ -47,10 +47,10 @@ function EditarProduto() {
   async function salvarEdicao() {
     try {
       const token = localStorage.getItem("token");
-      const { id, name, image, preco, quantidade } = produtoSelecionado;
+      const { id, name, imagem_url, preco, quantidade } = produtoSelecionado;
       await api.put(`/api/products/atualizar/${id}`, {
         name,
-        image,
+        imagem_url,
         preco,
         quantidade,
       }, {
@@ -65,8 +65,8 @@ function EditarProduto() {
   }
 
   return (
-    <div className="container">
-      <h2>Editar Produto</h2>
+    <div className="container" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Editar Produto</h2>
 
       <input
         type="text"
@@ -80,9 +80,11 @@ function EditarProduto() {
       </button>
 
       {produtoSelecionado && (
-        <div className="form-edicao">
-          <p><strong>ID:</strong> {produtoSelecionado.id}</p>
-          <p><strong>Status:</strong> {produtoSelecionado.status ? "Ativo" : "Inativo"}</p>
+  <div className="form-edicao">
+    <div className="info-linha">
+      <p className="info-balao"><strong>ID:</strong> {produtoSelecionado.id}</p>
+      <p className="info-balao"><strong>Status:</strong> {produtoSelecionado.status ? "Ativo" : "Inativo"}</p>
+    </div>
 
           <label>Nome:</label>
           <input
@@ -92,11 +94,20 @@ function EditarProduto() {
             onChange={handleChange}
           />
 
-          <label>Imagem (URL):</label>
+          {produtoSelecionado.imagem_url && (
+            <img
+              src={produtoSelecionado.imagem_url}
+              alt= "Imagem"
+              className="produto-imagem"
+              style={{ maxWidth: "100%", marginBottom: "10px", borderRadius: "5px" }}
+            />
+          )}
+
+          <label>  (URL):</label>
           <input
             type="text"
-            name="image"
-            value={produtoSelecionado.image}
+            name="imagem_url"
+            value={produtoSelecionado.imagem_url}
             onChange={handleChange}
           />
 
@@ -120,7 +131,8 @@ function EditarProduto() {
         </div>
       )}
 
-      <Link to="/painel">Voltar ao painel</Link>
+      <Link to="/painel" style={{ display: "block", marginTop: "20px", textAlign: "center" }}>
+        Voltar ao painel</Link>
     </div>
   );
 }

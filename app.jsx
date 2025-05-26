@@ -23,8 +23,6 @@ function App() {
                 <Route path="/produtos/listar" element={<ListarProdutos />} />
                 <Route path="/produtos/editar" element={<EditarProduto />} />
                 <Route path="/produtos/inativar" element={<InativarProduto />} />
-
-
             </Routes>
         </BrowserRouter>
     );
