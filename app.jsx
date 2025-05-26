@@ -7,7 +7,6 @@ import Painel from "./src/pages/Painel/painel";
 import CadastroProduto from './src/pages/CadastroProduto/cadastroproduto';
 import Vendas from "./src/pages/Vendas/vendas";
 
-
 function App() {
     return (
         <BrowserRouter>
@@ -19,8 +18,6 @@ function App() {
                 <Route path="/painel" element={<Painel />} /> 
                 <Route path="/produtos/criar" element={<CadastroProduto />} />
                 <Route path="/vendas" element={<Vendas />} />
-
-
             </Routes>
         </BrowserRouter>
     );
