@@ -18,7 +18,7 @@ function Login() {
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
             });
-
+                                            
             console.log("Resposta do login:", response.data);
 
             const token = response.data.access_token;
@@ -29,7 +29,6 @@ function Login() {
 
             setSuccessMessage("Login efetuado com sucesso!");
             navigate('/painel');
-
         } catch (err) {
             alert("Informação incorreta.");
         }
@@ -51,3 +50,4 @@ function Login() {
 }
 
 export default Login;
+

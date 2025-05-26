@@ -8,6 +8,7 @@ import CadastroProduto from './src/pages/CadastroProduto/cadastroproduto';
 import ListarProdutos from "./src/pages/Listarproduto/listarproduto";
 import EditarProduto from "./src/pages/EditarProduto/editarproduto";
 import InativarProduto from "./src/pages/InativarProduto/inativarproduto";
+import Vendas from "./src/pages/Vendas/vendas";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/produtos/listar" element={<ListarProdutos />} />
                 <Route path="/produtos/editar" element={<EditarProduto />} />
                 <Route path="/produtos/inativar" element={<InativarProduto />} />
+                <Route path="/vendas" element={<Vendas />} />
             </Routes>
         </BrowserRouter>
     );
