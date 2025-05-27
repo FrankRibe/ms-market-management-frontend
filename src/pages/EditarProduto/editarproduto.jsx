@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 function EditarProduto() {
   const [produtos, setProdutos] = useState([]);
-  const [buscaId, setBuscaId] = useState("");
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
   useEffect(() => {
@@ -25,15 +24,11 @@ function EditarProduto() {
     }
   }
 
-  function buscarProdutoPorId() {
+  function handleSelectChange(event) {
     const produto = produtos.find(
-      (item) => item.id.toString() === buscaId.trim()
+      (item) => item.id.toString() === event.target.value
     );
-    if (!produto) {
-      alert("Produto não encontrado!");
-      return;
-    }
-    setProdutoSelecionado({ ...produto });
+    setProdutoSelecionado(produto ? { ...produto } : null);
   }
 
   function handleChange(event) {
@@ -65,26 +60,30 @@ function EditarProduto() {
   }
 
   return (
-    <div className="container" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
+    <div className="container-editar" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Editar Produto</h2>
 
-      <input
-        type="text"
-        placeholder="Digite o ID do produto"
-        value={buscaId}
-        onChange={(e) => setBuscaId(e.target.value)}
+      <label htmlFor="select-produto">Selecione um produto:</label>
+      <select
+        id="select-produto"
+        value={produtoSelecionado ? produtoSelecionado.id : ""}
+        onChange={handleSelectChange}
         className="input-busca"
-      />
-      <button onClick={buscarProdutoPorId} className="btn-buscar">
-        Buscar
-      </button>
+      >
+        <option value="">Selecione...</option>
+        {produtos.map((produto) => (
+          <option key={produto.id} value={produto.id}>
+            {produto.name} (ID: {produto.id})
+          </option>
+        ))}
+      </select>
 
       {produtoSelecionado && (
-  <div className="form-edicao">
-    <div className="info-linha">
-      <p className="info-balao"><strong>ID:</strong> {produtoSelecionado.id}</p>
-      <p className="info-balao"><strong>Status:</strong> {produtoSelecionado.status ? "Ativo" : "Inativo"}</p>
-    </div>
+        <div className="form-edicao">
+          <div className="info-linha">
+            <p className="info-balao"><strong>ID:</strong> {produtoSelecionado.id}</p>
+            <p className="info-balao"><strong>Status:</strong> {produtoSelecionado.status ? "Ativo" : "Inativo"}</p>
+          </div>
 
           <label>Nome:</label>
           <input
@@ -97,13 +96,13 @@ function EditarProduto() {
           {produtoSelecionado.imagem_url && (
             <img
               src={produtoSelecionado.imagem_url}
-              alt= "Imagem"
+              alt="Imagem"
               className="produto-imagem"
               style={{ maxWidth: "100%", marginBottom: "10px", borderRadius: "5px" }}
             />
           )}
 
-          <label>  (URL):</label>
+          <label>Imagem (URL):</label>
           <input
             type="text"
             name="imagem_url"
@@ -132,7 +131,8 @@ function EditarProduto() {
       )}
 
       <Link to="/painel" style={{ display: "block", marginTop: "20px", textAlign: "center" }}>
-        Voltar ao painel</Link>
+        Voltar ao painel
+      </Link>
     </div>
   );
 }

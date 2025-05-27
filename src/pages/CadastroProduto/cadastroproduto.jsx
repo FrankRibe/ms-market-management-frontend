@@ -18,8 +18,7 @@ function CadastroProduto() {
       const token = localStorage.getItem("token");
 
       // O backend espera 'status' como booleano
-      const statusBool =
-        statusRef.current.value.toLowerCase() === "ativo" ? true : false;
+
 
       const response = await api.post(
         "/api/products/criar",
@@ -27,7 +26,6 @@ function CadastroProduto() {
           name: nameRef.current.value,
           preco: parseFloat(precoRef.current.value.replace(",", ".")),
           quantidade: parseInt(quantidadeRef.current.value),
-          status: statusBool,
           imagem_url: imagemRef.current.value,
           // seller_id será obtido no backend via JWT, então não envia aqui
         },
@@ -46,7 +44,6 @@ function CadastroProduto() {
         nameRef.current.value = "";
         precoRef.current.value = "";
         quantidadeRef.current.value = "";
-        statusRef.current.value = "";
         imagemRef.current.value = "";
       } else {
         navigate("/painel");
@@ -64,7 +61,6 @@ function CadastroProduto() {
         <input ref={nameRef} placeholder="Nome do produto" type="text" required />
         <input ref={precoRef} placeholder="Preço" type="text" required />
         <input ref={quantidadeRef} placeholder="Quantidade" type="number" required />
-        <input ref={statusRef} placeholder="Status (Ativo/Inativo)" type="text" required />
         <input ref={imagemRef} placeholder="URL da imagem" type="url" />
         <button type="submit">Cadastrar</button>
       </form>

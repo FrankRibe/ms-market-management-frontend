@@ -1,98 +1,166 @@
-import { useRef, useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
-import Select from 'react-select';
-
+import "./vendas.css";
 
 function Vendas() {
-    const quantidadeRef = useRef();
-    const navigate = useNavigate();
-    const [produtos, setProdutos] = useState([]);
-    const [produtoId, setProdutoId] = useState("");
+  const navigate = useNavigate();
+  const [produtos, setProdutos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [quantidade, setQuantidade] = useState("");
 
-    useEffect(() => {
-        async function fetchProdutos() {
-            try {
-                const token = localStorage.getItem("token");
-                const response = await api.get("/api/products", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setProdutos(response.data);
-                if (response.data.length > 0) {
-                    setProdutoId(response.data[0].id);
-                }
-            } catch (err) {
-                alert("Erro ao carregar produtos para venda.");
-            }
-        }
-        fetchProdutos();
-    }, []);
+  useEffect(() => {
+    async function fetchProdutos() {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await api.get("/api/products/listar", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProdutos(response.data || []);
+      } catch (error) {
+        alert("Erro ao carregar produtos para venda.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProdutos();
+  }, []);
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+  function handleSelectChange(event) {
+    const produto = produtos.find(
+      (item) => item.id.toString() === event.target.value
+    );
+    setProdutoSelecionado(produto || null);
+    setQuantidade("");
+  }
 
-        const quantidade = quantidadeRef.current.value.trim();
-
-        if (!produtoId || !quantidade) {
-            alert("Produto e quantidade são obrigatórios.");
-            return;
-        }
-
-        const quantidadeNumber = parseInt(quantidade);
-
-        if (isNaN(quantidadeNumber) || quantidadeNumber <= 0) {
-            alert("Quantidade deve ser um número válido e maior que zero.");
-            return;
-        }
-
-        try {
-            const token = localStorage.getItem("token");
-
-            const response = await api.post(
-                "/api/sales",
-                {
-                    produtoId: produtoId,
-                    quantidade: quantidadeNumber,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            alert(`Venda realizada com sucesso!\nProduto: ${response.data.product_name}\nQuantidade: ${response.data.quantidade_vendida}`);
-            navigate("/painel");
-        } catch (err) {
-            const erro = err.response?.data?.erro || "Erro ao tentar registrar venda.";
-            alert(erro);
-        }
+  const handleVenda = async () => {
+    if (!produtoSelecionado) {
+      alert("Selecione um produto.");
+      return;
+    }
+    if (!quantidade.trim()) {
+      alert("Informe a quantidade.");
+      return;
+    }
+    const quantidadeNumber = parseInt(quantidade);
+    if (isNaN(quantidadeNumber) || quantidadeNumber <= 0) {
+      alert("Quantidade deve ser um número válido e maior que zero.");
+      return;
     }
 
-    return (
-        <div id="cadastro-venda-container">
-            <h2>Registrar Venda</h2>
-            <form onSubmit={handleSubmit}>
-                <select
-                    value={produtoId}
-                    onChange={e => setProdutoId(e.target.value)}
-                    required
-                >
-                    {produtos.length === 0 && <option value="">Nenhum produto disponível</option>}
-                    {produtos.map(produto => (
-                        <option key={produto.id} value={produto.id}>
-                            {produto.name} (ID: {produto.id})
-                        </option>
-                    ))}
-                </select>
-                <input ref={quantidadeRef} placeholder="Quantidade" type="number" min="1" required />
-                <button type="submit">Registrar Venda</button>
-            </form>
-            <Link to="/painel">Voltar ao painel</Link>
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.post(
+        "/api/sales",
+        {
+          produtoId: produtoSelecionado.id,
+          quantidade: quantidadeNumber,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const continuar = window.confirm(
+        `Venda cadastrada com sucesso!
+Produto: ${response.data.product_name}
+Quantidade: ${response.data.quantidade_vendida}
+Deseja vender outro produto?
+Clique em OK para continuar vendendo ou Cancelar para voltar ao painel.`
+      );
+      if (continuar) {
+        window.location.reload();
+      } else {
+        navigate("/painel");
+      }
+    } catch (error) {
+      alert("Erro ao registrar venda.");
+    }
+  };
+
+  if (loading) return <p>Carregando produtos...</p>;
+  if (produtos.length === 0) return <p>Nenhum produto disponível para venda.</p>;
+
+  return (
+    <div className="container-vendas" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Registrar Venda</h2>
+
+      <label htmlFor="select-produto">Selecione um produto:</label>
+      <select
+        id="select-produto"
+        value={produtoSelecionado ? produtoSelecionado.id : ""}
+        onChange={handleSelectChange}
+        className="input-busca"
+      >
+        <option value="">Selecione...</option>
+        {produtos.map((produto) => (
+          <option key={produto.id} value={produto.id}>
+            {produto.name} (ID: {produto.id})
+          </option>
+        ))}
+      </select>
+
+      {produtoSelecionado && (
+        <div className="form-venda">
+          <div className="info-linha">
+            <p className="info-balao"><strong>ID:</strong> {produtoSelecionado.id}</p>
+            <p className="info-balao"><strong>Status:</strong> {produtoSelecionado.status ? "Ativo" : "Inativo"}</p>
+          </div>
+
+          <label>Nome:</label>
+          <input
+            type="text"
+            value={produtoSelecionado.name}
+            disabled
+          />
+
+          {produtoSelecionado.imagem_url && (
+            <img
+              src={produtoSelecionado.imagem_url}
+              alt="Imagem"
+              className="produto-imagem"
+              style={{ maxWidth: "100%", marginBottom: "10px", borderRadius: "5px" }}
+            />
+          )}
+
+          <label>Preço:</label>
+          <input
+            type="text"
+            value={`R$ ${Number(produtoSelecionado.preco).toFixed(2)}`}
+            disabled
+          />
+
+          <label>Quantidade em estoque:</label>
+          <input
+            type="text"
+            value={produtoSelecionado.quantidade}
+            disabled
+          />
+
+          <label>Quantidade para vender:</label>
+          <input
+            type="number"
+            min="1"
+            value={quantidade}
+            onChange={(e) => setQuantidade(e.target.value)}
+            required
+          />
+
+          <button onClick={handleVenda} className="btn-salvar">Registrar Venda</button>
         </div>
-    );
+      )}
+
+      <Link to="/painel" style={{ display: "block", marginTop: "20px", textAlign: "center" }}>
+        Voltar ao painel
+      </Link>
+    </div>
+  );
 }
 
 export default Vendas;

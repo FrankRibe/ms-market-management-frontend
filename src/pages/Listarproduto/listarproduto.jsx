@@ -32,29 +32,33 @@ function ListarProdutos() {
   if (produtos.length === 0) return <p>Nenhum produto cadastrado.</p>;
 
   return (
-    <div className="container">
+    <div className="container-listarproduto">
       <h2>Produtos Cadastrados</h2>
+      <div className="produto-lista">
 
-      {produtos.map((produto) => (
-        <div key={produto.id} className="produto-card">
-          <h3>{produto.name}</h3>
-          <p><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</p>
-          <p><strong>Quantidade:</strong> {produto.quantidade}</p>
-          <p>
-            <strong>Status:</strong>{" "}
-            <span className={produto.status ? "status-ativo" : "status-inativo"}>
-              {produto.status ? "Ativo" : "Inativo"}
-            </span>
-          </p>
-          {produto.imagem_url && 
-          <img
-           src={produto.imagem_url}
-           alt={produto.name}
-           className="produto-imagem" />}
-          <p>{produto.observacoes}</p>
-        </div>
-      ))}
-
+      {produtos
+        .slice()
+        .sort((a, b) => a.id - b.id) // Ordena do mais antigo para o mais novo
+        .map((produto) => (
+          <div key={produto.id} className="produto-card">
+            <h3>{produto.name}</h3>
+            <p><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</p>
+            <p><strong>Quantidade:</strong> {produto.quantidade}</p>
+            <p>
+              <strong>Status:</strong>{" "}
+              <span className={produto.status ? "status-ativo" : "status-inativo"}>
+                {produto.status ? "Ativo" : "Inativo"}
+              </span>
+            </p>
+            {produto.imagem_url && 
+            <img
+              src={produto.imagem_url}
+              alt={produto.name}
+              className="produto-imagem" />}
+            <p>{produto.observacoes}</p>
+          </div>
+        ))}
+      </div>
       <Link to="/painel">Voltar ao painel</Link>
     </div>
   );

@@ -21,6 +21,9 @@ function Painel() {
         <button className="button" onClick={() => navigate('/produtos/inativar')}>
           Inativar Produto
         </button>
+        <button className="button" onClick={() => navigate('/vendas')}>
+          Vender Produtos
+        </button>
       </div>
 
       <button

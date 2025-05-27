@@ -63,25 +63,25 @@ function InativarProduto() {
   }
 
   return (
-    <div className="container">
+    <div className="container-inativar">
       <h2>Inativar Produtos</h2>
 
-      <input
-        type="text"
-        placeholder="Buscar por ID"
-        value={buscaId}
-        onChange={(e) => setBuscaId(e.target.value)}
-        className="input-busca"
-      />
-
-      <ul className="lista-produtos">
+      <ul className="produto-lista">
         {produtos.map((produto) => (
           <li key={produto.id} className="produto-card">
             <p><strong>ID:</strong> {produto.id}</p>
             <p><strong>Nome:</strong> {produto.name}</p>
-            <p><strong>Status:</strong> {produto.status ? "Ativo" : "Inativo"}</p>
+            <p><strong>Status:</strong> {produto.status ? "Ativo" : "Inativo"} 
+            </p>
+            {produto.imagem_url && 
+            <img
+              src={produto.imagem_url}
+              alt={produto.name}
+              className="produto-imagem" />}
+            <p>{produto.observacoes}</p>
 
-            {produto.status && (
+            {produto.status &&
+             (
               <button
               onClick={() => atualizarStatus(produto.id, produto.status)}
               className="btn-inativar"
