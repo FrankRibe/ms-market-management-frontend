@@ -9,6 +9,7 @@ import ListarProdutos from "./src/pages/Listarproduto/listarproduto";
 import EditarProduto from "./src/pages/EditarProduto/editarproduto";
 import InativarProduto from "./src/pages/InativarProduto/inativarproduto";
 import Vendas from "./src/pages/Vendas/vendas";
+import AtivarProduto from "./src/pages/AtivarProduto/ativarProduto";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/produtos/listar" element={<ListarProdutos />} />
                 <Route path="/produtos/editar" element={<EditarProduto />} />
                 <Route path="/produtos/inativar" element={<InativarProduto />} />
+                <Route path="/produtos/ativar" element={<AtivarProduto />} />
                 <Route path="/vendas" element={<Vendas />} />
             </Routes>
         </BrowserRouter>
