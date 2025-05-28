@@ -36,8 +36,8 @@ function AtivarProduto() {
     }
     try {
       const token = localStorage.getItem("token");
-      await api.post(
-        `/api/products/ativar/${productId}`,
+      await api.patch(
+        `/api/products/${productId}/ativar`,
         {},
         {
           headers: {
@@ -60,24 +60,19 @@ function AtivarProduto() {
     <div className="container-ativar">
       <h2>Ativar Produto</h2>
       <form onSubmit={handleAtivar} className="form-ativar">
-        <label htmlFor="select-produto">Selecione o Produto:</label>
-        <select
-          id="select-produto"
+        <label htmlFor="input-produto">ID do Produto:</label>
+        <input
+          id="input-produto"
+          type="text"
           value={productId}
           onChange={(e) => setProductId(e.target.value)}
-        >
-          <option value="">Selecione...</option>
-          {produtos.map((produto) => (
-            <option key={produto.id} value={produto.id}>
-              {produto.name} (ID: {produto.id})
-            </option>
-          ))}
-        </select>
-        <button type="submit" className="btn-ativar">Ativar</button>
-      </form>
+          placeholder="Digite o ID do produto"
+  />
+  <button type="submit" className="btn-ativar">Ativar</button>
+</form>
       {mensagem && <p className="mensagem-sucesso">{mensagem}</p>}
       {erro && <p className="mensagem-erro">{erro}</p>}
-      <Link to="/painel">Voltar ao painel</Link>
+        <Link to="/painel">Voltar ao painel</Link>
     </div>
   );
 }

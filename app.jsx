@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MyGlobalStyles from "./src/pages/styles/globalStyles";
 import Home from "./src/pages/Home/home";
 import Cadastro from "./src/pages/Cadastro/cadastro";
 import Login from "./src/pages/Login/login";
@@ -14,8 +15,12 @@ import AtivarProduto from "./src/pages/AtivarProduto/ativarProduto";
 
 function App() {
     return (
+        <>
+        
+        <MyGlobalStyles />
         <BrowserRouter>
             <Routes>
+
                 <Route path="/" element={<Home />} />
                 <Route path="/cadastro-seller" element={<Cadastro />} />
                 <Route path="/ativacao" element={<Ativacao />} />
@@ -29,6 +34,7 @@ function App() {
                 <Route path="/vendas" element={<Vendas />} />
             </Routes>
         </BrowserRouter>
+        </>
     );
 }
 
