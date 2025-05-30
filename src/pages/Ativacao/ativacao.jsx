@@ -4,7 +4,7 @@ import api from "../../services/api";
 import "./ativacao.css";
 
 function Ativacao() {
-    const [sellerId, setSellerId] = useState("");
+    const [phone, setPhone] = useState("");
     const [activationCode, setActivationCode] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
@@ -17,7 +17,7 @@ function Ativacao() {
 
         try {
             // Substitui os placeholders na URL pelos valores reais
-            const response = await api.post(`/api/sellers/${sellerId}/activate/${activationCode}`);
+            const response = await api.post(`/api/sellers/${phone}/activate/${activationCode}`);
 
             setMessage(response.data.mensagem); // Mensagem de sucesso
             setTimeout(() => {
@@ -41,9 +41,9 @@ function Ativacao() {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    placeholder="ID do Vendedor"
-                    value={sellerId}
-                    onChange={(e) => setSellerId(e.target.value)}
+                    placeholder="Telefone do Vendedor"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                 />
                 <input
                     type="text"
