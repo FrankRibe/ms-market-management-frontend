@@ -18,7 +18,7 @@ function InativarProduto() {
   async function buscarProdutos() {
     try {
       const token = localStorage.getItem("token");
-      const response = await api.get("/api/products/listar", {
+      const response = await api.get("/api/products", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProdutos(response.data || []);

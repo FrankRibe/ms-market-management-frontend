@@ -59,7 +59,7 @@ function CadastroProduto() {
       <h2>Cadastro de Produto</h2>
       <form onSubmit={handleSubmit}>
         <input ref={nameRef} placeholder="Nome do produto" type="text" required />
-        <input ref={precoRef} placeholder="Preço" type="text" required />
+        <input ref={precoRef} placeholder="Preço: R$ 0,00" type="text" required />
         <input ref={quantidadeRef} placeholder="Quantidade" type="number" required />
         <input ref={imagemRef} placeholder="URL da imagem" type="url" />
         <button type="submit">Cadastrar</button>

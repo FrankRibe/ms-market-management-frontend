@@ -14,7 +14,7 @@ function Vendas() {
     async function fetchProdutos() {
       try {
         const token = localStorage.getItem("token");
-        const response = await api.get("/api/products/listar", {
+        const response = await api.get("/api/products", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -41,7 +41,7 @@ function Ativacao() {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    placeholder="Telefone do Vendedor"
+                    placeholder="Telefone do Vendedor (+55XXXXXXXXXXX)"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                 />

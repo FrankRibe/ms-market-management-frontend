@@ -30,7 +30,7 @@ function Login() {
             setSuccessMessage("Login efetuado com sucesso!");
             navigate('/painel');
         } catch (err) {
-            alert("Informação incorreta.");
+            alert("E-mail ou Senha inválidos.");
         }
     }
 
