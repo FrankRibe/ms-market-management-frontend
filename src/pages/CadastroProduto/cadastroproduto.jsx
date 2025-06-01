@@ -2,34 +2,31 @@ import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../services/api";
 import "./cadastroproduto.css";
+// imports necessários para o funcionamento do cadastro de produtos
 
 function CadastroProduto() {
   const nameRef = useRef();
   const precoRef = useRef();
   const quantidadeRef = useRef();
-  const statusRef = useRef();
   const imagemRef = useRef();
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); // Evita o recarregamento da página
 
     try {
       const token = localStorage.getItem("token");
 
-      // O backend espera 'status' como booleano
-      const statusBool =
-        statusRef.current.value.toLowerCase() === "ativo" ? true : false;
+    // Pega o token salvo
+
 
       const response = await api.post(
         "/api/products/criar",
         {
           name: nameRef.current.value,
-          preco: parseFloat(precoRef.current.value.replace(",", ".")),
-          quantidade: parseInt(quantidadeRef.current.value),
-          status: statusBool,
+          preco: parseFloat(precoRef.current.value.replace(",", ".")), // Converte preço para float
+          quantidade: parseInt(quantidadeRef.current.value), // Converte quantidade para inteiro
           imagem_url: imagemRef.current.value,
-          // seller_id será obtido no backend via JWT, então não envia aqui
         },
         {
           headers: {
@@ -38,6 +35,7 @@ function CadastroProduto() {
         }
       );
 
+      // Pergunta ao usuário se deseja cadastrar outro produto
       const desejaAdicionarMais = window.confirm(
         "Produto cadastrado com sucesso!\n\nDeseja adicionar mais um produto? Clique em OK para continuar ou Cancelar para voltar ao painel."
       );
@@ -46,7 +44,6 @@ function CadastroProduto() {
         nameRef.current.value = "";
         precoRef.current.value = "";
         quantidadeRef.current.value = "";
-        statusRef.current.value = "";
         imagemRef.current.value = "";
       } else {
         navigate("/painel");
@@ -64,7 +61,6 @@ function CadastroProduto() {
         <input ref={nameRef} placeholder="Nome do produto" type="text" required />
         <input ref={precoRef} placeholder="Preço" type="text" required />
         <input ref={quantidadeRef} placeholder="Quantidade" type="number" required />
-        <input ref={statusRef} placeholder="Status (Ativo/Inativo)" type="text" required />
         <input ref={imagemRef} placeholder="URL da imagem" type="url" />
         <button type="submit">Cadastrar</button>
       </form>
