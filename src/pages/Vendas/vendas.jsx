@@ -16,7 +16,8 @@ function Vendas() {
     async function fetchProdutos() {
       try {
         const token = localStorage.getItem("token");
-        const response = await api.get("/api/products/listar", {
+        const response = await api.get("/api/products", {
+
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -30,6 +31,7 @@ function Vendas() {
     }
     fetchProdutos();
   }, []);
+
 
   // Atualiza o produto selecionado ao mudar o select
   function handleSelectChange(event) {

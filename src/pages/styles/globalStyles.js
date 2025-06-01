@@ -11,8 +11,8 @@ const MyGlobalStyles = createGlobalStyle`
     /* Estilos globais */
     body {
         font-family: Arial, sans-serif;
-        background-color: #1a1a1a; /* Preto mais claro */
-        color: #f5f5f5; /* Texto claro */
+        background-color: #18181c; /* Preto/cinza escuro */
+        color: #f5f5f5;
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -22,6 +22,7 @@ const MyGlobalStyles = createGlobalStyle`
     h1, h2, h3, h4, h5, h6 {
         margin-bottom: 1rem;
         font-weight: bold;
+        color: #8a8aff; /* Roxo claro */
     }
 
     p {
@@ -30,62 +31,71 @@ const MyGlobalStyles = createGlobalStyle`
 
     /* Links */
     a {
-        color: #007bff; /* Azul */
-        text-decoration: none;
-        transition: color 0.2s ease-in-out;
+        color: #8a8aff; /* Roxo claro */
+        text-decoration: underline;
+        transition: color 0.2s;
     }
 
     a:hover {
-        text-decoration: underline;
+        color: #fff;
     }
 
     a:focus {
-        outline: 2px dashed #007bff; /* Foco acessível */
+        outline: 2px dashed #8a8aff;
         outline-offset: 2px;
     }
 
     /* Botões */
     button {
-        background-color: #007bff; /* Azul */
-        color: #fff; /* Texto branco */
+        background-color: #8a8aff;
+        color: #fff;
         border: none;
         padding: 10px 15px;
-        border-radius: 5px;
+        border-radius: 6px;
         cursor: pointer;
         font-weight: bold;
-        transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        font-size: 1rem;
+        transition: background-color 0.2s, transform 0.1s;
     }
 
     button:hover {
-        background-color: #0056b3; /* Azul mais escuro */
-        transform: scale(1.02); /* Leve aumento no hover */
+        background-color: #5a5ad6;
+        transform: scale(1.02);
     }
 
     button:focus {
-        outline: 2px dashed #007bff; /* Foco acessível */
+        outline: 2px dashed #8a8aff;
         outline-offset: 2px;
     }
 
     /* Inputs e Textareas */
-    input, textarea {
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 5px;
+    input, textarea, select {
+        border: 1px solid #333;
+        padding: 0.45rem 0.7rem;
+        border-radius: 6px;
         width: 100%;
         margin-bottom: 1rem;
-        background-color: #2a2a2a; /* Fundo escuro */
-        color: #f5f5f5; /* Texto claro */
-        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        background-color: #23232b;
+        color: #f5f5f5;
+        font-size: 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-sizing: border-box;
+    }
+
+    input[disabled], textarea[disabled] {
+        background: #23232b;
+        color: #aaa;
+        cursor: not-allowed;
     }
 
     input::placeholder, textarea::placeholder {
-        color: #888; /* Placeholder em cinza */
+        color: #888;
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
         outline: none;
-        border-color: #007bff; /* Azul no foco */
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de foco */
+        border-color: #8a8aff;
+        box-shadow: 0 0 5px rgba(138, 138, 255, 0.3);
     }
 
     /* Listas */
@@ -106,14 +116,14 @@ const MyGlobalStyles = createGlobalStyle`
     }
 
     th, td {
-        border: 1px solid #ccc;
+        border: 1px solid #333;
         padding: 10px;
         text-align: left;
     }
 
     th {
-        background-color: #2a2a2a; /* Fundo escuro */
-        color: #f5f5f5; /* Texto claro */
+        background-color: #23232b;
+        color: #8a8aff;
     }
 `;
 

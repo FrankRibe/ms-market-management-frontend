@@ -13,7 +13,7 @@ function ListarProdutos() {
     async function fetchProdutos() {
       try {
         const token = localStorage.getItem("token");
-        const response = await api.get("/api/products/listar", {
+        const response = await api.get("/api/products", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +38,6 @@ function ListarProdutos() {
       <h2>Produtos Cadastrados</h2>
       <div className="produto-lista">
         {/* Ordena os produtos do mais antigo para o mais novo e exibe cada um em um card */}
-
       {produtos
         .slice()
         .sort((a, b) => a.id - b.id) // Ordena do mais antigo para o mais novo

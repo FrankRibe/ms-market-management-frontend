@@ -5,8 +5,10 @@ import "./ativacao.css";
 // imports necessários para o funcionamento da ativação
 
 function Ativacao() {
+
     // Estados para armazenar os valores dos campos e mensagens
     const [sellerId, setSellerId] = useState("");
+    const [phone, setPhone] = useState("");
     const [activationCode, setActivationCode] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
@@ -18,8 +20,9 @@ function Ativacao() {
         setError("");
 
         try {
-
-            const response = await api.post(`/api/sellers/${sellerId}/activate/${activationCode}`);
+          
+            // Substitui os placeholders na URL pelos valores reais
+            const response = await api.post(`/api/sellers/${phone}/activate/${activationCode}`);
 
             setMessage(response.data.mensagem);
             setTimeout(() => {
@@ -43,9 +46,9 @@ function Ativacao() {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    placeholder="ID do Vendedor"
-                    value={sellerId}
-                    onChange={(e) => setSellerId(e.target.value)}
+                    placeholder="Telefone do Vendedor (+55XXXXXXXXXXX)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                 />
                 <input
                     type="text"

@@ -16,7 +16,7 @@ function EditarProduto() {
   async function buscarProdutos() {
     try {
       const token = localStorage.getItem("token");
-      const response = await api.get("/api/products/listar", {
+      const response = await api.get("/api/products", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProdutos(response.data || []);
@@ -25,6 +25,7 @@ function EditarProduto() {
       alert("Erro ao buscar produtos.");
     }
   }
+
   // Atualiza o produto selecionado ao mudar o select
   function handleSelectChange(event) {
     const produto = produtos.find(
@@ -64,7 +65,7 @@ function EditarProduto() {
   return (
     <div className="container-editar" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Editar Produto</h2>
-      
+
       {/* Select para escolher o produto */}
       <label htmlFor="select-produto">Selecione um produto:</label>
       <select
