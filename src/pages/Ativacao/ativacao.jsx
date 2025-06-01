@@ -7,7 +7,6 @@ import "./ativacao.css";
 function Ativacao() {
 
     // Estados para armazenar os valores dos campos e mensagens
-    const [sellerId, setSellerId] = useState("");
     const [phone, setPhone] = useState("");
     const [activationCode, setActivationCode] = useState("");
     const [message, setMessage] = useState("");
