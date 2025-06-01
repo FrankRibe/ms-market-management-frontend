@@ -2,24 +2,22 @@ import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../services/api";
 import "./cadastroproduto.css";
+// imports necessários para o funcionamento do cadastro de produtos
 
 function CadastroProduto() {
   const nameRef = useRef();
   const precoRef = useRef();
   const quantidadeRef = useRef();
-  const statusRef = useRef();
   const imagemRef = useRef();
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); // Evita o recarregamento da página
 
     try {
       const token = localStorage.getItem("token");
 
-      // O backend espera 'status' como booleano
-
-
+    // Pega o token salvo
       const response = await api.post(
         "/api/products/criar",
         {
@@ -27,7 +25,6 @@ function CadastroProduto() {
           preco: parseFloat(precoRef.current.value.replace(",", ".")),
           quantidade: parseInt(quantidadeRef.current.value),
           imagem_url: imagemRef.current.value,
-          // seller_id será obtido no backend via JWT, então não envia aqui
         },
         {
           headers: {
@@ -36,6 +33,7 @@ function CadastroProduto() {
         }
       );
 
+      // Pergunta ao usuário se deseja cadastrar outro produto
       const desejaAdicionarMais = window.confirm(
         "Produto cadastrado com sucesso!\n\nDeseja adicionar mais um produto? Clique em OK para continuar ou Cancelar para voltar ao painel."
       );

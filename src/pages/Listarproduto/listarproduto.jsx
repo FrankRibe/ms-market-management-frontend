@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 import "./listarproduto.css";
+// imports necessários para o funcionamento da listagem de produtos
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
+  // Estado para controlar o loading
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ function ListarProdutos() {
         console.error("Erro ao carregar produtos:", error.response?.data || error.message);
         alert("Erro ao carregar produtos.");
       } finally {
-        setLoading(false);
+        setLoading(false); // Finaliza o loading
       }
     }
 
@@ -35,7 +37,7 @@ function ListarProdutos() {
     <div className="container-listarproduto">
       <h2>Produtos Cadastrados</h2>
       <div className="produto-lista">
-
+        {/* Ordena os produtos do mais antigo para o mais novo e exibe cada um em um card */}
       {produtos
         .slice()
         .sort((a, b) => a.id - b.id) // Ordena do mais antigo para o mais novo

@@ -2,8 +2,11 @@ import { useState, } from "react";
 import { useNavigate } from 'react-router-dom';
 import api from "../../services/api";
 import "./ativacao.css";
+// imports necessários para o funcionamento da ativação
 
 function Ativacao() {
+
+    // Estados para armazenar os valores dos campos e mensagens
     const [phone, setPhone] = useState("");
     const [activationCode, setActivationCode] = useState("");
     const [message, setMessage] = useState("");
@@ -16,17 +19,18 @@ function Ativacao() {
         setError("");
 
         try {
+          
             // Substitui os placeholders na URL pelos valores reais
             const response = await api.post(`/api/sellers/${phone}/activate/${activationCode}`);
 
-            setMessage(response.data.mensagem); // Mensagem de sucesso
+            setMessage(response.data.mensagem);
             setTimeout(() => {
-                navigate('/login'); // Redireciona para a página de login após 3 segundos
+                navigate('/login'); 
             }, 3000);
 
         } catch (err) {
             if (err.response && err.response.data && err.response.data.erro) {
-                setError(err.response.data.erro); // Mensagem de erro do backend
+                setError(err.response.data.erro); // Exibe a mensagem de erro do backend
             } else {
                 setError("Erro ao ativar o vendedor. Tente novamente.");
             }

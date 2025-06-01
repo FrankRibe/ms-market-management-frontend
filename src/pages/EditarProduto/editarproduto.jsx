@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import "./editarproduto.css";
 import { Link } from "react-router-dom";
+// imports necessários para o funcionamento da página de edição de produtos
 
 function EditarProduto() {
   const [produtos, setProdutos] = useState([]);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
+  // Busca os produtos ao montar o componente
   useEffect(() => {
     buscarProdutos();
   }, []);
@@ -24,6 +26,7 @@ function EditarProduto() {
     }
   }
 
+  // Atualiza o produto selecionado ao mudar o select
   function handleSelectChange(event) {
     const produto = produtos.find(
       (item) => item.id.toString() === event.target.value
@@ -38,7 +41,7 @@ function EditarProduto() {
       [name]: value,
     }));
   }
-
+  // Salva as alterações do produto na API
   async function salvarEdicao() {
     try {
       const token = localStorage.getItem("token");
@@ -63,6 +66,7 @@ function EditarProduto() {
     <div className="container-editar" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Editar Produto</h2>
 
+      {/* Select para escolher o produto */}
       <label htmlFor="select-produto">Selecione um produto:</label>
       <select
         id="select-produto"

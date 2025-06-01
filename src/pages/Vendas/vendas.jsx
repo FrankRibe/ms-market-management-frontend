@@ -9,12 +9,15 @@ function Vendas() {
   const [loading, setLoading] = useState(true);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
   const [quantidade, setQuantidade] = useState("");
+  // Estado para armazenar o produto selecionado e a quantidade a ser vendida
 
+  // Busca os produtos ao montar o componente
   useEffect(() => {
     async function fetchProdutos() {
       try {
         const token = localStorage.getItem("token");
         const response = await api.get("/api/products", {
+
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -29,6 +32,8 @@ function Vendas() {
     fetchProdutos();
   }, []);
 
+
+  // Atualiza o produto selecionado ao mudar o select
   function handleSelectChange(event) {
     const produto = produtos.find(
       (item) => item.id.toString() === event.target.value
@@ -54,6 +59,7 @@ function Vendas() {
 
     try {
       const token = localStorage.getItem("token");
+      // Envia os dados da venda para a API
       const response = await api.post(
         "/api/sales",
         {
